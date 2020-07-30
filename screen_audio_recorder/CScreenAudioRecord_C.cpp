@@ -1,5 +1,5 @@
-#include "stdafx.h"
-#include "IScreeAudioRecord.h"
+﻿#include "stdafx.h"
+#include "IScreenAudioRecord.h"
 #include "IScreenAudioRecord_C.h"
 #include "log.h"
 #include "strsafe.h"

@@ -1,7 +1,7 @@
-#ifndef CSCREENAUDIORECORD_H
+﻿#ifndef CSCREENAUDIORECORD_H
 #define CSCREENAUDIORECORD_H
 
-#include "IScreeAudioRecord.h"
+#include "IScreenAudioRecord.h"
 #include "IMediaFileRecorder.h"
 #include "IScreenGrabber.h"
 #include "IAudioCapture.h"

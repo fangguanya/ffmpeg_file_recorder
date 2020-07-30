@@ -32,9 +32,9 @@ namespace MediaFileRecorderTest
 
             string fileName = "test.mp4";
             MediaFileRecorder.RECT video_capture_rect;
-            video_capture_rect.left = 500;
-            video_capture_rect.top = 500;
-            video_capture_rect.right = 1920;
+            video_capture_rect.left = 1000;
+            video_capture_rect.top = 0;
+            video_capture_rect.right = 1820;
             video_capture_rect.bottom = 1080;
             m_stRecordInfo.file_name = new byte[1024];
             Array.Copy(System.Text.Encoding.UTF8.GetBytes(fileName), m_stRecordInfo.file_name, fileName.Length);
@@ -42,10 +42,10 @@ namespace MediaFileRecorderTest
             m_stRecordInfo.is_record_speaker = 1;
             m_stRecordInfo.is_record_video = 1;
             m_stRecordInfo.video_capture_rect = video_capture_rect;
-            m_stRecordInfo.video_frame_rate = 20;
-            m_stRecordInfo.quality = MediaFileRecorder.QUALITY.HIGH;
-            m_stRecordInfo.video_dst_width = 1920;
-            m_stRecordInfo.video_dst_height = 1080;
+            m_stRecordInfo.video_frame_rate = 40;
+            m_stRecordInfo.quality = MediaFileRecorder.QUALITY.VERY_HIGH;
+            m_stRecordInfo.video_dst_width = /*1920*/video_capture_rect.right - video_capture_rect.left;
+            m_stRecordInfo.video_dst_height = /*1080*/video_capture_rect.bottom - video_capture_rect.top;
 
             int ret = MediaFileRecorder.MR_SetRecordInfo(m_RecordObject, ref m_stRecordInfo);
         }

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "CMediaFileRecorder.h"
 #include <windows.h>
 #include <MMSystem.h>
@@ -133,7 +133,7 @@ namespace MediaFileRecorder
 		avcodec_parameters_to_context(m_pVideoCodecCtx, pVideoStream->codecpar);*/
 
 		m_pVideoCodecCtx = pVideoStream->codec;
-		m_pVideoCodecCtx->codec_id = AV_CODEC_ID_H264;
+		m_pVideoCodecCtx->codec_id = AV_CODEC_ID_H264/*AV_CODEC_ID_MPEG2VIDEO*/;
 		m_pVideoCodecCtx->codec_type = AVMEDIA_TYPE_VIDEO;
 		m_pVideoCodecCtx->pix_fmt = AV_PIX_FMT_YUV420P;
 		m_pVideoCodecCtx->width = m_stRecordInfo.video_dst_width;
@@ -143,11 +143,11 @@ namespace MediaFileRecorder
 		m_pVideoCodecCtx->time_base.den = m_stRecordInfo.video_frame_rate;
 		m_pVideoCodecCtx->thread_count = 5;
 
-		m_pVideoCodecCtx->qcompress = (float)0.6;
-		m_pVideoCodecCtx->max_qdiff = 4;
-		m_pVideoCodecCtx->qmin = 0;
-		m_pVideoCodecCtx->qmax = 50;
-		m_pVideoCodecCtx->delay = 0;
+		//m_pVideoCodecCtx->qcompress = (float)1.0;
+		//m_pVideoCodecCtx->max_qdiff = 4;
+		//m_pVideoCodecCtx->qmin = 1;
+		//m_pVideoCodecCtx->qmax = 50;
+		//m_pVideoCodecCtx->delay = 0;
 
 		m_pVideoCodecCtx->keyint_min = m_stRecordInfo.video_frame_rate;
 		m_pVideoCodecCtx->gop_size = m_stRecordInfo.video_frame_rate * 10;
@@ -166,9 +166,9 @@ namespace MediaFileRecorder
 			crf = "18";
 		}
 		AVDictionary *param = 0;
-		av_dict_set(&param, "preset", "veryfast", 0);
-		av_dict_set(&param, "tune", "zerolatency", 0);
-		av_dict_set(&param, "crf", crf, 0);
+		av_dict_set(&param, "preset", "slow", 0);
+		av_dict_set(&param, "tune", "film", 0);
+		av_dict_set(&param, "crf", "18", 0);
 
 		AVCodec* pEncoder = avcodec_find_encoder(m_pVideoCodecCtx->codec_id);
 		if (!pEncoder)
@@ -180,7 +180,7 @@ namespace MediaFileRecorder
 
 		if (m_pFormatCtx->oformat->flags & AVFMT_GLOBALHEADER)
 		{
-			m_pVideoCodecCtx->flags |= CODEC_FLAG_GLOBAL_HEADER;
+			m_pVideoCodecCtx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 		}
 
 		int ret = avcodec_open2(m_pVideoCodecCtx, pEncoder, &param);
@@ -272,7 +272,7 @@ namespace MediaFileRecorder
 
 		if (m_pFormatCtx->oformat->flags & AVFMT_GLOBALHEADER)
 		{
-			m_pAudioCodecCtx->flags |= CODEC_FLAG_GLOBAL_HEADER;
+			m_pAudioCodecCtx->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
 		}
 
 		if (avcodec_open2(m_pAudioCodecCtx, audio_encoder, NULL) < 0)
@@ -703,18 +703,18 @@ namespace MediaFileRecorder
 
 		m_pConvertCtx = swr_alloc();
 		// init audio resample context
-		//ÉèÖÃÔ´Í¨µÀ²¼¾Ö  
+		//è®¾ç½®æºé€šé“å¸ƒå±€  
 		av_opt_set_int(m_pConvertCtx, "in_channel_layout", src_av_ch_layout, 0);
-		//ÉèÖÃÔ´Í¨µÀ²ÉÑùÂÊ  
+		//è®¾ç½®æºé€šé“é‡‡æ ·çŽ‡  
 		av_opt_set_int(m_pConvertCtx, "in_sample_rate", m_stAudioInfo.sample_rate, 0);
-		//ÉèÖÃÔ´Í¨µÀÑù±¾¸ñÊ½  
+		//è®¾ç½®æºé€šé“æ ·æœ¬æ ¼å¼  
 		av_opt_set_sample_fmt(m_pConvertCtx, "in_sample_fmt", src_av_sample_fmt, 0);
 
-		//Ä¿±êÍ¨µÀ²¼¾Ö  
+		//ç›®æ ‡é€šé“å¸ƒå±€  
 		av_opt_set_int(m_pConvertCtx, "out_channel_layout", m_pCodecCtx->channel_layout, 0);
-		//Ä¿±ê²ÉÓÃÂÊ  
+		//ç›®æ ‡é‡‡ç”¨çŽ‡  
 		av_opt_set_int(m_pConvertCtx, "out_sample_rate", m_pCodecCtx->sample_rate, 0);
-		//Ä¿±êÑù±¾¸ñÊ½  
+		//ç›®æ ‡æ ·æœ¬æ ¼å¼  
 		av_opt_set_sample_fmt(m_pConvertCtx, "out_sample_fmt", m_pCodecCtx->sample_fmt, 0);
 
 		if (swr_init(m_pConvertCtx) < 0)
@@ -745,9 +745,10 @@ namespace MediaFileRecorder
 				}
 			}
 
-			int dst_nb_samples = (int)av_rescale_rnd(
-				swr_get_delay(m_pConvertCtx, m_stAudioInfo.sample_rate) + nb_samples,
-				m_pCodecCtx->sample_rate, m_stAudioInfo.sample_rate, AV_ROUND_UP);
+			int dst_nb_samples = (int)av_rescale_rnd(  swr_get_delay(m_pConvertCtx, m_stAudioInfo.sample_rate) + nb_samples
+				, m_pCodecCtx->sample_rate
+				, m_stAudioInfo.sample_rate
+				, AV_ROUND_UP);
 
 			if (dst_nb_samples <= 0)
 			{
@@ -908,7 +909,7 @@ namespace MediaFileRecorder
 		av_image_fill_arrays(m_pInVideoFrame->data, m_pInVideoFrame->linesize, m_pInPicBuffer, 
 			m_pCodecCtx->pix_fmt, m_pCodecCtx->width, m_pCodecCtx->height, 1);
 
-		//ÉêÇë30Ö¡»º´æ
+		//ç”³è¯·30å¸§ç¼“å­˜
 		m_pFifoBuffer = av_fifo_alloc(30 * m_nPicSize);
 
 		InitializeCriticalSection(&m_BufferSection);

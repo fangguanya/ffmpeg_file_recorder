@@ -1,4 +1,4 @@
-
+ï»¿
 #include "system_info.h"
 #include <assert.h>
 #include <shlobj.h>
@@ -9,8 +9,8 @@ typedef NTSTATUS(WINAPI *pRtlGetVersion)(
 
 SystemInfo::WindowsVersion SystemInfo::windows_version()
 {
-    //getversionexÔÚwin8.1Ö®ºó±»Î¢Èí¸´ÔÓ»¯ÁËÒ»ÏÂ£¬ÔÚwin10ÒÔ¼°Ö®ºóµÄÏµÍ³Ö±½Óµ÷ÓÃµÄ»°£¬»ñÈ¡²»ÁËÕýÈ·µÄ°æ±¾
-    //ÓÚÊÇ´Ó¸üµ×²ãµÄº¯ÊýÀ´»ñÈ¡
+    //getversionexåœ¨win8.1ä¹‹åŽè¢«å¾®è½¯å¤æ‚åŒ–äº†ä¸€ä¸‹ï¼Œåœ¨win10ä»¥åŠä¹‹åŽçš„ç³»ç»Ÿç›´æŽ¥è°ƒç”¨çš„è¯ï¼ŒèŽ·å–ä¸äº†æ­£ç¡®çš„ç‰ˆæœ¬
+    //äºŽæ˜¯ä»Žæ›´åº•å±‚çš„å‡½æ•°æ¥èŽ·å–
     RTL_OSVERSIONINFOEXW os_info;
     os_info.dwOSVersionInfoSize = sizeof(os_info);
     BOOL get_ver_ret = FALSE;
@@ -131,37 +131,37 @@ std::string SystemInfo::windows_version_string(WindowsVersion ver)
     return ver_str;
 }
 
-std::string SystemInfo::cpu_model()
-{
-    int cpuInfo[4] = { -1 };
-    char CPUBrandString[0x40] = { 0 };
-    int nExIds_ = 0;
-    try
-    {
-        __cpuid(cpuInfo, 0x80000000);
-        nExIds_ = cpuInfo[0];
-
-        if (nExIds_ >= 0x80000004)
-        {
-            memset(CPUBrandString, 0, sizeof(CPUBrandString));
-
-            __cpuid(cpuInfo, 0x80000002);
-            memcpy(CPUBrandString, cpuInfo, sizeof(cpuInfo));
-
-            __cpuid(cpuInfo, 0x80000003);
-            memcpy(CPUBrandString + 16, cpuInfo, sizeof(cpuInfo));
-
-            __cpuid(cpuInfo, 0x80000004);
-            memcpy(CPUBrandString + 32, cpuInfo, sizeof(cpuInfo));
-        }
-    }
-    catch (...)
-    {
-
-    }
-
-    return CPUBrandString;
-}
+//std::string SystemInfo::cpu_model()
+//{
+//    int cpuInfo[4] = { -1 };
+//    char CPUBrandString[0x40] = { 0 };
+//    int nExIds_ = 0;
+//    try
+//    {
+//        __cpuid(cpuInfo, 0x80000000);
+//        nExIds_ = cpuInfo[0];
+//
+//        if (nExIds_ >= 0x80000004)
+//        {
+//            memset(CPUBrandString, 0, sizeof(CPUBrandString));
+//
+//            __cpuid(cpuInfo, 0x80000002);
+//            memcpy(CPUBrandString, cpuInfo, sizeof(cpuInfo));
+//
+//            __cpuid(cpuInfo, 0x80000003);
+//            memcpy(CPUBrandString + 16, cpuInfo, sizeof(cpuInfo));
+//
+//            __cpuid(cpuInfo, 0x80000004);
+//            memcpy(CPUBrandString + 32, cpuInfo, sizeof(cpuInfo));
+//        }
+//    }
+//    catch (...)
+//    {
+//
+//    }
+//
+//    return CPUBrandString;
+//}
 
 uint64_t SystemInfo::physical_memory_size()
 {

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "CWASAudioCapture.h"
 #include "log.h"
 
@@ -223,6 +223,11 @@ namespace MediaFileRecorder
 			CleanUp();
 			return -1;
 		}
+		pWfex->wFormatTag = WAVE_FORMAT_PCM;
+		pWfex->wBitsPerSample = 16;
+		pWfex->nBlockAlign = 4;
+		pWfex->cbSize = 0;
+		pWfex->nAvgBytesPerSec = pWfex->nSamplesPerSec*pWfex->nBlockAlign;
 
 		InitFormat(pWfex, m_stAudioInfo);
 
@@ -231,7 +236,7 @@ namespace MediaFileRecorder
 			streamFlags |= AUDCLNT_STREAMFLAGS_LOOPBACK;
 
 		res = m_pAudioClient->Initialize(AUDCLNT_SHAREMODE_SHARED, streamFlags,
-			REFERENCE_TIME_VAL, 0, pWfex, NULL);
+			/*REFERENCE_TIME_VAL*/1000, 0, pWfex, NULL);
 		if (FAILED(res))
 		{
 			Error("CWASAudioCapture: Audio client initialize failed, res: %d");
@@ -298,6 +303,11 @@ namespace MediaFileRecorder
 			Error("InitRender: failed to get mix format, res: %d", res);
 			return -1;
 		}
+		wfex->wFormatTag = WAVE_FORMAT_PCM;
+		wfex->wBitsPerSample = 16;
+		wfex->nBlockAlign = 4;
+		wfex->cbSize = 0;
+		wfex->nAvgBytesPerSec = wfex->nSamplesPerSec*wfex->nBlockAlign;
 
 		res = client->Initialize(
 			AUDCLNT_SHAREMODE_SHARED, 0,
@@ -358,7 +368,8 @@ namespace MediaFileRecorder
 			layout = ext->dwChannelMask;
 		}
 		CHANNEL_LAYOUT chl_layout = CovertChannelLayout(layout, pWfex->nChannels);
-		audioInfo.audio_format = AUDIO_FORMAT_FLOAT;
+		//audioInfo.audio_format = AUDIO_FORMAT_FLOAT;
+		audioInfo.audio_format = AUDIO_FORMAT_16BIT;
 		audioInfo.chl_layout = chl_layout;
 		audioInfo.sample_rate = pWfex->nSamplesPerSec;
 		return 0;

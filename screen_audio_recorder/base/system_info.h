@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <string>
 #include <stdint.h>
@@ -33,7 +33,7 @@ public:
     WindowsVersion windows_version();
     std::string windows_version_string(WindowsVersion ver);
 
-    std::string cpu_model();
+    //std::string cpu_model();
     uint64_t physical_memory_size();
     bool is_x64_system();
 };

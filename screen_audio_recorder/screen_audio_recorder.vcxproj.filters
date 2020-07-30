@@ -39,9 +39,6 @@
     <ClInclude Include="IMediaFileRecorder.h">
       <Filter>头文件\interface</Filter>
     </ClInclude>
-    <ClInclude Include="IScreeAudioRecord.h">
-      <Filter>头文件\interface</Filter>
-    </ClInclude>
     <ClInclude Include="IScreenGrabber.h">
       <Filter>头文件\interface</Filter>
     </ClInclude>
@@ -70,6 +67,9 @@
       <Filter>头文件\interface</Filter>
     </ClInclude>
     <ClInclude Include="IScreenAudioRecord_C.h">
+      <Filter>头文件\interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IScreenAudioRecord.h">
       <Filter>头文件\interface</Filter>
     </ClInclude>
   </ItemGroup>
