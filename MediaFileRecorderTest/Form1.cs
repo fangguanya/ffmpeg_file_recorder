@@ -32,7 +32,7 @@ namespace MediaFileRecorderTest
 
             string fileName = "test.mp4";
             MediaFileRecorder.RECT video_capture_rect;
-            video_capture_rect.left = 1000;
+            video_capture_rect.left = 100;
             video_capture_rect.top = 0;
             video_capture_rect.right = 1820;
             video_capture_rect.bottom = 1080;
