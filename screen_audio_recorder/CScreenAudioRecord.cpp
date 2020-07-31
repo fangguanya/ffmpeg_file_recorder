@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "CScreenAudioRecord.h"
 #include "log.h"
 namespace MediaFileRecorder
@@ -89,7 +89,7 @@ namespace MediaFileRecorder
 		}
 
 		const RECT& captureRect = m_stRecordInfo.video_capture_rect;
-		Info("Record Info: record video: %d, record mic: %d, record speaker: %d; "
+		Warning("Record Info: record video: %d, record mic: %d, record speaker: %d; "
 			"capture_rect: left: %d, right: %d, top: %d, bottom: %d; frame_rate: %d;"
 			"dst width: %d, dst height: %d; quality: %d; file_name %s",
 			m_stRecordInfo.is_record_video, m_stRecordInfo.is_record_mic, 

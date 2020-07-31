@@ -143,11 +143,11 @@ namespace MediaFileRecorder
 		m_pVideoCodecCtx->time_base.den = m_stRecordInfo.video_frame_rate;
 		m_pVideoCodecCtx->thread_count = 5;
 
-		//m_pVideoCodecCtx->qcompress = (float)1.0;
-		//m_pVideoCodecCtx->max_qdiff = 4;
-		//m_pVideoCodecCtx->qmin = 1;
-		//m_pVideoCodecCtx->qmax = 50;
-		//m_pVideoCodecCtx->delay = 0;
+		m_pVideoCodecCtx->qcompress = (float)1.0;
+		m_pVideoCodecCtx->max_qdiff = 4;
+		m_pVideoCodecCtx->qmin = 1;
+		m_pVideoCodecCtx->qmax = 50;
+		m_pVideoCodecCtx->delay = 0;
 
 		m_pVideoCodecCtx->keyint_min = m_stRecordInfo.video_frame_rate;
 		m_pVideoCodecCtx->gop_size = m_stRecordInfo.video_frame_rate * 10;
@@ -168,7 +168,7 @@ namespace MediaFileRecorder
 		AVDictionary *param = 0;
 		av_dict_set(&param, "preset", "slow", 0);
 		av_dict_set(&param, "tune", "film", 0);
-		av_dict_set(&param, "crf", "18", 0);
+		av_dict_set(&param, "crf", crf, 0);
 
 		AVCodec* pEncoder = avcodec_find_encoder(m_pVideoCodecCtx->codec_id);
 		if (!pEncoder)
