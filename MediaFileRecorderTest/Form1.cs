@@ -42,7 +42,7 @@ namespace MediaFileRecorderTest
             m_stRecordInfo.is_record_speaker = 1;
             m_stRecordInfo.is_record_video = 1;
             m_stRecordInfo.video_capture_rect = video_capture_rect;
-            m_stRecordInfo.video_frame_rate = 60;
+            m_stRecordInfo.video_frame_rate = 20;
             m_stRecordInfo.quality = MediaFileRecorder.QUALITY.VERY_HIGH;
             m_stRecordInfo.video_dst_width = /*1920*/video_capture_rect.right - video_capture_rect.left;
             m_stRecordInfo.video_dst_height = /*1080*/video_capture_rect.bottom - video_capture_rect.top;

@@ -144,9 +144,12 @@ namespace MediaFileRecorder
 		m_pVideoCodecCtx->thread_count = 5;
 
 		m_pVideoCodecCtx->qcompress = (float)1.0;
-		m_pVideoCodecCtx->max_qdiff = 4;
-		m_pVideoCodecCtx->qmin = 1;
-		m_pVideoCodecCtx->qmax = 50;
+		m_pVideoCodecCtx->max_qdiff = 1;
+
+		// 注意:这个qmin/qmax很影响最终产出适配得质量!
+		//	- 越小越清晰(占用空间也越大)!
+		m_pVideoCodecCtx->qmin = 0;
+		m_pVideoCodecCtx->qmax = 30;
 		m_pVideoCodecCtx->delay = 0;
 
 		m_pVideoCodecCtx->keyint_min = m_stRecordInfo.video_frame_rate;
