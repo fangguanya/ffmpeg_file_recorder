@@ -153,8 +153,8 @@ namespace MediaFileRecorder
 		//m_pVideoCodecCtx->delay = 0;
 
 		// 码率
-		m_pVideoCodecCtx->bit_rate = 2048000;
-		m_pVideoCodecCtx->bit_rate_tolerance = 10240;
+		m_pVideoCodecCtx->bit_rate = m_stRecordInfo.video_bit_rate;
+		m_pVideoCodecCtx->bit_rate_tolerance = m_stRecordInfo.video_bit_rate_tolerance;
 
 		m_pVideoCodecCtx->keyint_min = m_stRecordInfo.video_frame_rate;
 		m_pVideoCodecCtx->gop_size = m_stRecordInfo.video_frame_rate * 10;

@@ -35,6 +35,8 @@ namespace MediaFileRecorderTest
             public int video_dst_width;
             public int video_dst_height;
             public int video_frame_rate;
+            public int video_bit_rate;
+            public int video_bit_rate_tolerance;
             public QUALITY quality;
         }
 

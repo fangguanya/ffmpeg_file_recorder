@@ -1,4 +1,4 @@
-#ifndef MEDIARECORDTYPEDEF_H
+﻿#ifndef MEDIARECORDTYPEDEF_H
 #define MEDIARECORDTYPEDEF_H
 
 namespace MediaFileRecorder
@@ -123,6 +123,8 @@ namespace MediaFileRecorder
 		int  video_dst_width;
 		int  video_dst_height;
 		int  video_frame_rate;
+		int  video_bit_rate;
+		int  video_bit_rate_tolerance;
 		VIDEO_QUALITY quality;
 		RECORD_INFO()
 		{
@@ -131,6 +133,8 @@ namespace MediaFileRecorder
 			is_record_mic = false;
 			is_record_speaker = false;
 
+			video_bit_rate = 1024000;
+			video_bit_rate_tolerance = 1024;
 			video_dst_width = 0;
 			video_dst_height = 0;
 			quality = UNKOWN;
