@@ -148,12 +148,17 @@ namespace MediaFileRecorder
 
 		// 注意:这个qmin/qmax很影响最终产出适配得质量!
 		//	- 越小越清晰(占用空间也越大)!
-		m_pVideoCodecCtx->qmin = 0;
-		m_pVideoCodecCtx->qmax = 25;
-		m_pVideoCodecCtx->delay = 0;
+		//m_pVideoCodecCtx->qmin = 0;
+		//m_pVideoCodecCtx->qmax = 25;
+		//m_pVideoCodecCtx->delay = 0;
+
+		// 码率
+		m_pVideoCodecCtx->bit_rate = 2048000;
+		m_pVideoCodecCtx->bit_rate_tolerance = 10240;
 
 		m_pVideoCodecCtx->keyint_min = m_stRecordInfo.video_frame_rate;
 		m_pVideoCodecCtx->gop_size = m_stRecordInfo.video_frame_rate * 10;
+		//m_pVideoCodecCtx->max_b_frames = m_stRecordInfo.video_frame_rate * 2;
 
 		const char* crf = "23";
 		if (m_stRecordInfo.quality == NORMAL)
@@ -169,7 +174,7 @@ namespace MediaFileRecorder
 			crf = "18";
 		}
 		AVDictionary *param = 0;
-		av_dict_set(&param, "preset", "veryslow", 0);
+		av_dict_set(&param, "preset", "slow", 0);
 		av_dict_set(&param, "tune", "film", 0);
 		av_dict_set(&param, "crf", crf, 0);
 
